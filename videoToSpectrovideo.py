@@ -12,7 +12,7 @@ import os
 width = 1920
 height = 1080
 
-input_filename = 'nesid_ocean_30sec'
+input_filename = 'nesid_ocean_short'
 extension = '.mp4'
 input_dir = 'input'
 
@@ -50,11 +50,17 @@ for i, frame in enumerate(video):
     cv2.imwrite(outfile_path, magnitude_spectrum)
 
 
+# TODO: Create output path at output/input_file_name
+image_path = 'output/%s'%input_filename
+if not os.path.exists(image_path):
+    os.mkdir(image_path)
+    print("Created path --> %s"%savepath)
 # Composite the frames into a video
+input_path = 'output/%s/*.png'%input_filename
 (
     ffmpeg
-    .input('output/%s/*.png'%input_filename, pattern_type='glob', framerate=60)
-    .output('movie.mp4')
+    .input(input_path, pattern_type='glob', framerate=60)
+    .output('movie003.mp4')
     .run()
 )
 
