@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 import ffmpeg
+import os
 
 # Load a video for conversion
 # in_file = ffmpeg.input('input/split_waves.mp4')
@@ -11,9 +12,15 @@ import ffmpeg
 width = 1920
 height = 1080
 
+input_filename = 'nesid_ocean_30sec'
+extension = '.mp4'
+input_dir = 'input'
+
+input_path = os.path.join(input_dir, (input_filename+extension))
+
 out, _ = (
     ffmpeg
-    .input('input/nesid_ocean_short.mp4')
+    .input(input_path)
     .output('pipe:', format='rawvideo', pix_fmt='gray')
     .run(capture_stdout=True)
 )
@@ -38,14 +45,15 @@ for i, frame in enumerate(video):
     magnitude_spectrum.max()
 
     # Save the image
-    outfile_path = 'output/fft_video_frames/nesid_ocean_short_fft_%s.png'%str(i).zfill(3)
+    outfile_path = 'output/%s/%s_fft_%s.png'% (input_filename, input_filename, str(i).zfill(3))
+    print(outfile_path)
     cv2.imwrite(outfile_path, magnitude_spectrum)
 
 
 # Composite the frames into a video
 (
     ffmpeg
-    .input('output/fft_video_frames/*.png', pattern_type='glob', framerate=60)
+    .input('output/%s/*.png'%input_filename, pattern_type='glob', framerate=60)
     .output('movie.mp4')
     .run()
 )
