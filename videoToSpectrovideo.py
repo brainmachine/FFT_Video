@@ -12,7 +12,7 @@ import multiprocessing as mp
 
 # Define input_filename, extension and input dir. 
 input_filename = 'nesid_ocean_short'
-extension = '.mp4'
+extension = 'mp4'
 input_dir = 'input' # TODO: Make this constant
 
 def convertVideoToImages(video):
@@ -35,7 +35,7 @@ def convertVideoToImages(video):
 
 
 # Splice the path components together5
-input_path = os.path.join(input_dir, (input_filename+extension))
+input_path = os.path.join(input_dir, (input_filename+'.'+extension))
 
 # TODO: populate these with ffprobe
 # TODO: automatically pick the right stream (if there are multiple streams)
@@ -77,16 +77,20 @@ print("video.shape (ndarray) --> " + str(video.shape))
 
 
 # Multiprocessing frame conversion and saving PNGs
-segments = np.split(video, 4, axis=0)
-jobs = []
-for segment in segments:
-    p = mp.Process(target=convertVideoToImages, args=(segment,))
-    jobs.append(p)
-    p.start()
+# segments = np.split(video, 4, axis=0)
+# jobs = []
+# for segment in segments:
+#     p = mp.Process(target=convertVideoToImages, args=(segment,))
+#     jobs.append(p)
+#     p.start()
+
+# Single core version of video conversion
+convertVideoToImages(video)
+
 
 # Composite the frames into a video
 
-# Reac the PNGs from here
+# Read the PNGs from here
 input_path = 'output/%s/*.png'%input_filename
 
 # Save the composite video here
