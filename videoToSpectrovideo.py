@@ -3,7 +3,12 @@ import numpy as np
 from matplotlib import pyplot as plt
 import ffmpeg
 import os
+import multiprocessing as mp
 
+# TODO: Idea: Stack the output PNGs like pieces of transparent paper
+# TODO: Use a rolling window and look at a segment of the stack evolve. 
+# TODO: This is in 3D so you can rotate around, zoom in, immerse yourself or whatever. 
+# TODO: It will be a floating field of fft bins (possibly VR/UE4?)
 
 # Define input_filename, extension and input dir. 
 input_filename = 'nesid_ocean_short'
@@ -70,7 +75,14 @@ video = (
 print("\n \n ------------------------------------- \n \n")
 print("video.shape (ndarray) --> " + str(video.shape))
 
-convertVideoToImages(video)
+
+# Multiprocessing frame conversion and saving PNGs
+segments = np.split(video, 4, axis=0)
+jobs = []
+for segment in segments:
+    p = mp.Process(target=convertVideoToImages, args=(segment,))
+    jobs.append(p)
+    p.start()
 
 # Composite the frames into a video
 
