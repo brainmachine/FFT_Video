@@ -16,6 +16,40 @@ input_filename = 'aegissida'
 extension = 'mp4'
 input_dir = 'input' # TODO: Make this constant
 
+NUM_CORES = 4
+
+doProcess = False
+doExport = True
+
+def getFps():
+    # Split the string and calculate the fps
+    a, b = fileinfo['streams'][1]['avg_frame_rate'].split('/')
+    a, b = float(a), float(b)
+    fps = a/b
+    return fps
+
+def createExportPath():
+    image_path = 'output/%s'%input_filename
+    if not os.path.exists(image_path):
+        os.mkdir(image_path)
+        print("Created path --> %s"%image_path)
+
+def loadVideo():
+    # Load the video
+    out, _ = (
+        ffmpeg
+        .input(input_path)
+        .output('pipe:', format='rawvideo', pix_fmt='gray')
+        .run(capture_stdout=True)
+    )
+    # Convert to Numpy Array
+    video = (
+        np
+        .frombuffer(out, np.uint8)
+        .reshape([-1, height, width, 1])
+    )
+    return video
+
 def convertVideoToImages(video, offset):
     # Iterate through all the video frames and save out a PNGs
     for i, frame in enumerate(video):
@@ -33,55 +67,10 @@ def convertVideoToImages(video, offset):
         print(outfile_path)
         cv2.imwrite(outfile_path, magnitude_spectrum)
 
-
-
-if __name__ == '__main__': 
-    # Splice the path components together5
-    input_path = os.path.join(input_dir, (input_filename+'.'+extension))
-
-    # TODO: populate these with ffprobe
-    # TODO: automatically pick the right stream (if there are multiple streams)
-    fileinfo = ffmpeg.probe(input_path)
-    width = fileinfo['streams'][1]['width']
-    height = fileinfo['streams'][1]['height']
-
-    # duration = float(fileinfo['format']['duration'])
-    # num_frames = int(fileinfo['format']['size'])
-    # fps = num_frames/duration
-
-    # Split the string and calculate the fps
-    a, b = fileinfo['streams'][1]['avg_frame_rate'].split('/')
-    a, b = float(a), float(b)
-    fps = a/b
-
-    # Create output path at output/input_file_name. 
-    # This is where we save all the processed FFT PNGs 
-    # before we composite them into a new video. 
-    image_path = 'output/%s'%input_filename
-    if not os.path.exists(image_path):
-        os.mkdir(image_path)
-        print("Created path --> %s"%image_path)
-
-    # Load the video
-    out, _ = (
-        ffmpeg
-        .input(input_path)
-        .output('pipe:', format='rawvideo', pix_fmt='gray')
-        .run(capture_stdout=True)
-    )
-    # Convert to Numpy Array
-    video = (
-        np
-        .frombuffer(out, np.uint8)
-        .reshape([-1, height, width, 1])
-    )
-
-    print("\n \n ------------------------------------- \n \n")
-    print("video.shape (ndarray) --> " + str(video.shape))
-
-
+def processFrames(video ):
+    """ Process video """
     # Trim the video so it is divisible by 4 (for my 4 CPU cores)
-    NUM_CORES = 4
+    
     trim = len(video)%NUM_CORES # number of frames to trim off the end
     print(len(video))
     print(trim)
@@ -98,12 +87,7 @@ if __name__ == '__main__':
     for job in jobs:
         job.join()
 
-    # Single core version of video conversion
-    # convertVideoToImages(video, 0)
-
-
-    # Composite the frames into a video
-
+def exportVideo():
     # Read the PNGs from here
     input_path = 'output/%s/*.png'%input_filename
 
@@ -117,6 +101,42 @@ if __name__ == '__main__':
         .run()
     )
     print("saved " + output_path)
+
+if __name__ == '__main__': 
+    # Splice the path components together5
+    input_path = os.path.join(input_dir, (input_filename+'.'+extension))
+
+    # TODO: automatically pick the right stream (if there are multiple streams)
+    fileinfo = ffmpeg.probe(input_path)
+    width = fileinfo['streams'][1]['width']
+    height = fileinfo['streams'][1]['height']
+
+    fps = getFps()
+
+    video = np.empty(shape=[1, 1])
+    if doProcess:
+        # Load video file
+        loadVideo()
+        # Create output path at output/input_file_name. 
+        createExportPath()
+
+        
+        video = loadVideo()
+
+    print("\n \n ------------------------------------- \n \n")
+    print("video.shape (ndarray) --> " + str(video.shape))
+
+    if doExport:
+        processFrames(video)
+        exportVideo()
+
+    # Single core version of video conversion
+    # convertVideoToImages(video, 0)
+
+
+    # Composite the frames into a video
+
+    
     # Using NumPy
     # This saves out a good looking PNG at the end
 
