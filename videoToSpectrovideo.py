@@ -6,6 +6,7 @@ import os
 import multiprocessing as mp
 mp.set_start_method('spawn', True)
 
+# TODO: Run FFT on RGB channels separately and splice them back together. Should make nice colors that emphasize differnce.
 # TODO: Idea: Stack the output PNGs like pieces of transparent paper
 # TODO: Use a rolling window and look at a segment of the stack evolve. 
 # TODO: This is in 3D so you can rotate around, zoom in, immerse yourself or whatever. 
@@ -20,6 +21,8 @@ NUM_CORES = 4
 
 doProcess = False
 doExport = True
+
+
 
 def getFps():
     # Split the string and calculate the fps
@@ -67,7 +70,7 @@ def convertVideoToImages(video, offset):
         print(outfile_path)
         cv2.imwrite(outfile_path, magnitude_spectrum)
 
-def processFrames(video ):
+def processFrames(video):
     """ Process video """
     # Trim the video so it is divisible by 4 (for my 4 CPU cores)
     
@@ -87,20 +90,21 @@ def processFrames(video ):
     for job in jobs:
         job.join()
 
-def exportVideo():
-    # Read the PNGs from here
-    input_path = 'output/%s/*.png'%input_filename
+def compositeVideo():
+    """ Loads all PNGs from a path and produces a video. """
 
+    # Read the PNGs from here
+    images_path = 'output/%s/*.png'%input_filename
     # Save the composite video here
-    output_path = '%s_fft.%s'%(input_filename, extension)
-    print("exporting " + output_path)
+    video_save_path = '%s_fft.%s'%(input_filename, extension)
+    print("exporting " + video_save_path)
     (
         ffmpeg
-        .input(input_path, pattern_type='glob', framerate=fps)
-        .output(output_path)
+        .input(images_path, pattern_type='glob', framerate=fps)
+        .output(video_save_path, format='mp4')
         .run()
     )
-    print("saved " + output_path)
+    print("saved " + video_save_path)
 
 if __name__ == '__main__': 
     # Splice the path components together5
@@ -128,15 +132,9 @@ if __name__ == '__main__':
 
     if doExport:
         processFrames(video)
-        exportVideo()
-
-    # Single core version of video conversion
-    # convertVideoToImages(video, 0)
+        compositeVideo() # Reads the processed frames from disk and exports video
 
 
-    # Composite the frames into a video
-
-    
     # Using NumPy
     # This saves out a good looking PNG at the end
 

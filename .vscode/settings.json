@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "fft_video_env/bin/python",
+    //"git.ignoreLimitWarning": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": ["--rcfile", ".pylintrc"]
+}
