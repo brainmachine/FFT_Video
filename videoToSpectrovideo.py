@@ -13,7 +13,7 @@ mp.set_start_method('spawn', True)
 # TODO: It will be a floating field of fft bins (possibly VR/UE4?)
 
 # Define input_filename, extension and input dir. 
-input_filename = 'aegissida'
+input_filename = 'VID_20190707_214139'
 extension = 'mp4'
 input_dir = 'input' # TODO: Make this constant
 

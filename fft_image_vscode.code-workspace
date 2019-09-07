@@ -5,6 +5,8 @@
 		}
 	],
 	"settings": {
-		"git.ignoreLimitWarning": true
+		"git.ignoreLimitWarning": true,
+		//"python.pythonPath": "C:\\Users\\Leo\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe"
+		"python.pythonPath": "python"
 	}
 }

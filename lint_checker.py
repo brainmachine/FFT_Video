@@ -2,7 +2,7 @@
 This is a module for checking various linting rules.
 """
 
-oascalCase = "Case of Pascal"
+pascalCase = "Case of Pascal"
 snake_case = "case_of_snake"
 
 class SomeClass:
@@ -14,8 +14,10 @@ class SomeClass:
             isTrue = hey_you
         print(isTrue)
 
+
     def DoStuff(self, thing):
         return thing
 
 someInstance = SomeClass()
 
+exit()

@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "fft_video_env/bin/python",
+    "python.pythonPath": "C:\\Users\\Leo\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe",
     //"git.ignoreLimitWarning": true,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
