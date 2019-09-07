@@ -13,13 +13,17 @@ mp.set_start_method('spawn', True)
 # TODO: It will be a floating field of fft bins (possibly VR/UE4?)
 
 # Define input_filename, extension and input dir. 
+<<<<<<< HEAD
 input_filename = 'VID_20190707_214139'
+=======
+input_filename = 'VID_20190825_153910'
+>>>>>>> 8c5950019481c910b330209e84412e186483d35f
 extension = 'mp4'
-input_dir = 'input' # TODO: Make this constant
+input_dir = 'input/iceland_waves' # TODO: Make this constant
 
 NUM_CORES = 4
 
-doProcess = False
+doProcess = True
 doExport = True
 
 
@@ -39,6 +43,8 @@ def createExportPath():
 
 def loadVideo():
     # Load the video
+    # TODO: "deprecated pixel format used, make sure you did set range correctly"
+    # https://stackoverflow.com/questions/23067722/swscaler-warning-deprecated-pixel-format-used
     out, _ = (
         ffmpeg
         .input(input_path)
@@ -59,6 +65,7 @@ def convertVideoToImages(video, offset):
         print("converting frame to fft")
         f = np.fft.fft2(frame)
         fshift = np.fft.fftshift(f)
+        # TODO: Deal with divide-by-zero 
         magnitude_spectrum = 20*np.log(np.abs(fshift))
         
         # Normalize magnitude_spectrum
