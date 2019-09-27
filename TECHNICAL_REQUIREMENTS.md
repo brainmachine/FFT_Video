@@ -25,14 +25,19 @@ Possible video formats:
 
 ### Number of Works
     - 1
+  
 ### Approximate dimensions
     - Approx 120x80cm surface, side-by-side with 10cm spacing between surfaces.
     - Total dimensions: 250x80 cm.
 
 ### Duration
     - Approx 10 minutes.
+
+
 ### Ideal exhibition context
-    The videos should be projected on a white wall, ideally side-by-side. The projections can either go on the same wall or
+
+
+
 ### Framing or equipment needs: 
 
 
