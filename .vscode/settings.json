@@ -1,7 +1,11 @@
 {
-    "python.pythonPath": "C:\\Users\\Leo\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe",
+    "python.pythonPath": "c:\\Users\\Leo\\Documents\\FFT_Video\\.venv\\Scripts\\python.exe",
     //"git.ignoreLimitWarning": true,
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": ["--rcfile", ".pylintrc"]
+    "python.linting.pylintEnabled": false,
+    "python.linting.pylintArgs": [
+        "--rcfile",
+        ".pylintrc"
+    ],
+    "python.linting.banditEnabled": true
 }

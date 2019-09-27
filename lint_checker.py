@@ -19,5 +19,6 @@ class SomeClass:
         return thing
 
 someInstance = SomeClass()
+print(type(someInstance))
 
 exit()

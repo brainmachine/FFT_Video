@@ -13,13 +13,10 @@ mp.set_start_method('spawn', True)
 # TODO: It will be a floating field of fft bins (possibly VR/UE4?)
 
 # Define input_filename, extension and input dir. 
-<<<<<<< HEAD
-input_filename = 'VID_20190707_214139'
-=======
+
 input_filename = 'VID_20190825_153910'
->>>>>>> 8c5950019481c910b330209e84412e186483d35f
 extension = 'mp4'
-input_dir = 'input/iceland_waves' # TODO: Make this constant
+input_dir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\" # TODO: Make this constant
 
 NUM_CORES = 4
 
@@ -45,11 +42,12 @@ def loadVideo():
     # Load the video
     # TODO: "deprecated pixel format used, make sure you did set range correctly"
     # https://stackoverflow.com/questions/23067722/swscaler-warning-deprecated-pixel-format-used
+
     out, _ = (
         ffmpeg
-        .input(input_path)
-        .output('pipe:', format='rawvideo', pix_fmt='gray')
-        .run(capture_stdout=True)
+        .input(temp_dir)
+        .output('pipe:', format='rawvideo', pix_fmt='rgb24')
+        .run(capture_stdout=True, capture_stderr=True)
     )
     # Convert to Numpy Array
     video = (
@@ -118,7 +116,9 @@ if __name__ == '__main__':
     input_path = os.path.join(input_dir, (input_filename+'.'+extension))
 
     # TODO: automatically pick the right stream (if there are multiple streams)
-    fileinfo = ffmpeg.probe(input_path)
+    temp_dir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\VID_20190707_214139.mp4"
+    fileinfo = ffmpeg.probe(temp_dir)
+    # fileinfo = ffmpeg.probe(input_path)
     width = fileinfo['streams'][1]['width']
     height = fileinfo['streams'][1]['height']
 
