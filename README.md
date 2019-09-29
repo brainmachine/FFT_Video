@@ -66,7 +66,7 @@ At this point, I was confident that the technique would work well with videos. A
 
 ![](output/nesid_ocean_short_fft.gif)
 
-As you can see, the result shows patterns around the vertical axis (representing horizontal edge transitions). The pattern itself is mostly static but flows toward the center of the plot. To me, this captures the feeling I got when I meditated by the Pacif Ocean. The ocean is simultaneously sitting still *and* in motion.
+As you can see, the result shows patterns around the vertical axis (representing horizontal edge transitions). The pattern itself is mostly static but flows toward the center of the plot. To me, this captures the feeling I got when I meditated by the Pacific Ocean. The ocean is simultaneously sitting still *and* in motion.
 
 As the end product of this process I will process a series of ocean-videos I've been filming during the summer and edit them into a 10-15 minute long video. 
 
