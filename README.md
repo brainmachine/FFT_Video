@@ -38,6 +38,14 @@ Personally, I was very excited to see the first image of a black hole. It's a ma
 
 Looking at both images, I was happy to discover that the *feeling* I get from looking at both images is the same. This supports my belief that there might be something about the specific composition of frequencies in our visual field that creates an impression in our vision (and ultimately our consciousness) and can make us feel a certain way. The emotional effects of relative compositions of frequencies (and amplitude) are well known in music. We know that certain frequencies, only relative to certain other ones, can create a specific emotional response. Composers and musicians take advantage of this when writing music. A simple example of this is chord composition. A major chord feels happy and uplifting and a minor chord can make you sad. As we generally accept this with sound, it makes sense to me that the same principles apply to light (or any other medium).
 
+Before starting to convert images of ocean waves, I wanted to have a better understanding of how simple geometry is transformed into the frequency domain. For this puspose I used an image of the ceiling at the Waterfront station, downtown Vancouver. 
+
+!["Waterfront station ceiling."](input/waterfront_ceiling_low_res.jpg "Waterfront station ceiling.")
+Waterfront station ceiling.
+!["Waterfront station ceiling Fourier Transform."](output/waterfron_ceiling_fft_levels_low_res.png)
+
+
+
 
 ## Technical requirements and space needed
 
