@@ -21,8 +21,8 @@ At one point, while meditating by the Pacific Ocean, I had the feeling that the 
 Art and physics may seem like entirely different fields with their own ways of thinking, but on a human level I think the practicioners in both fields are seeking knowledge about how the world works and how we fit into that picture. 
 
 ## What I have generated for the project (how many pieces)
-I have produced a computer program that converts videos to animated 2D Fourier Tranform plots. I am using this program to convert videos of ocean waves to animated plots that show how the frequency and amplitude of the waves change over time.
-The first step in creating the animation was to process a still image and convert it to a 2D Fourier Transform. I was doing this around the same time as scientists involved with the Event Horizon Telescope network produced the first image of a black hole, so I thought it would be an excellent subject matter for an initial test. I wanted to see if the aesthetics - and the *feeling* - of the image was preserved in the process.
+I have produced a computer program that converts videos to animated 2D Fourier Tranform plots. I am using this program to convert videos of ocean waves to animated plots that show how the frequency and amplitude of the waves change over time. The plots are traditionally set up so that the lowest frequencies appear at the center of the graph and the highest frequencies at the edges. Vertical edges in the image will appear as a horizontal line in the transformed image while horizontal edges appear vertical. Diagonal edges will appear as diagonal lines on the plot, and their tilt is determined by the angle. 
+The first step in creating an animated Fourier transform plot was to process a still image and convert it to a 2D Fourier transform. I was experimenting with this around the same time as scientists involved with the Event Horizon Telescope network produced the first image of a black hole - so I thought it would be an excellent subject matter for an initial test. I wanted to see if the aesthetics - and the *feeling* - of the image was preserved in the process.
 
 <br> </br>
 ![M87*, Messier 87](https://cdn.eso.org/images/screen/eso1907a.jpg "Credit:
@@ -36,13 +36,21 @@ EHT Collaboration
 
 Personally, I was very excited to see the first image of a black hole. It's a massive stellar entity with a gravitational field that light cannot escape. As to the image itself, there is something intruiging about the assymetry of the glowing halo around the object. It feels both unexpected and familiar at the same time. 
 
-Looking at both images, I was happy to discover that the *feeling* I get from looking at both images is the same. This supports my belief that there might be something about the specific composition of frequencies in our visual field that creates an impression in our vision (and ultimately our consciousness) and can make us feel a certain way. The emotional effects of relative compositions of frequencies (and amplitude) are well known in music. We know that certain frequencies, only relative to certain other ones, can create a specific emotional response. Composers and musicians take advantage of this when writing music. A simple example of this is chord composition. A major chord feels happy and uplifting and a minor chord can make you sad. As we generally accept this with sound, it makes sense to me that the same principles apply to light (or any other medium).
+Looking at both images, I was happy to discover that the *feeling* I get from looking at both images is the same. This supports my belief that there might be something about the specific composition of frequencies in our visual field that creates an impression in our vision (and ultimately our consciousness) and can make us feel a certain way. The emotional effects of relative compositions of frequencies (and amplitude) are well known in music. We know that certain frequencies, only relative to certain other ones, can create a specific emotional response. Composers and musicians take advantage of this when writing music. A simple example of this is chord composition. A major chord feels happy and uplifting and a minor chord can make you sad. As we generally accept this quality of sound, it makes sense to me that the same principles would apply to light (or any other medium).
 
-Before starting to convert images of ocean waves, I wanted to have a better understanding of how simple geometry is transformed into the frequency domain. For this puspose I used an image of the ceiling at the Waterfront station, downtown Vancouver. 
+Before starting to convert images of ocean waves, I wanted to gain an intuition of how simple geometry is transformed into the frequency domain. For this puspose I used an image of the ceiling at the Waterfront station, downtown Vancouver. As the image is composed mostly of straight lines running at different angles I expected to see several diagonal lines appear in the Fourier transform. Furthermore, because the image has several straight horizontal lines I expected a strong line to appear on the vertical axis. 
 
 !["Waterfront station ceiling."](input/waterfront_ceiling_low_res.jpg "Waterfront station ceiling.")
 Waterfront station ceiling.
+<br> </br>
 !["Waterfront station ceiling Fourier Transform."](output/waterfron_ceiling_fft_levels_low_res.png)
+Fourier transform of the Waterfront station ceiling. 
+<br> </br>
+
+Comparing this set of images it is clear that the structural components of the photograph are carried through the Fourier transform and the results are in line with what I expected to see. If we were to only look at the Fourier transform we could infer that the source image had a number of straight lines running through the image at different angles.
+
+Now, as a final step before starting to process videos, I wanted to transform images of ocean waves to see what it would look like. My expectation was to see patterns emerge around the vertical axis, as ocean waves are mostly composed of horizontal edges. 
+
 
 
 
@@ -53,17 +61,6 @@ See TECHNICAL_REQUIREMENTS.md
 
 
 
-# Video installation possibilities, notes. 
-Possible video formats: 
-- Single channel
-    - Alternate source-video and FFT-video playback
-    - OR blend the videos 
-        - blending arc: source_only (1 cycle) -> fade to fft (1 cycle) -> fft_only (1 cycle) -> swap video+fft-source and repeat cycle
-    - OR composite videos (source: left, fft: right)
-
-- Dual channel:
-    - Videos play synchronously on 2 projectors, side-by-side on the same wall
-    - Audio is played on 2 channels, speakers mounted on left and right
 
 
 
