@@ -36,10 +36,7 @@ EHT Collaboration
 2D Fourier Transform of the M87*, Messier 87 image.
 
 
-- [insert black hole image] 
-- [insert black hole FFT image]
-
-Personally, I was very excited to see the first image of a black hole - and I was even more excited to see that (from my point of view) the *feeling* I get from looking at both images is the same. This tells me  there is something about the specific composition of frequencies that creates an impression in our sensory organs and can make us feel a certain way. This is something that we all know, and generally accept, about music. We know that certain frequencies, relative to certain other ones, can create a certain feeling. Composers and musicians take advantage of this when writing music. A simple example of this is the choice of scale. A major scale feels happy and uplifting and a minor scale can make you sad. 
+Personally, I was very excited to see the first image of a black hole - and I was even more excited to see that (from my point of view) the *feeling* I get from looking at both images is the same. This tells me  there is something about the specific composition of frequencies that creates an impression in our sensory organs and can make us feel a certain way. This is something that we all know, and generally accept, about music. We know that certain frequencies, relative to certain other ones, can create a certain feeling. Composers and musicians take advantage of this when writing music. A simple example of this is chord composition. A major chord feels happy and uplifting and a minor chord can make you sad. As we generally accept this with sound, why wouldn't the same principles apply to light (and the world around us).
 
 ## Technical requirements and space needed
 
