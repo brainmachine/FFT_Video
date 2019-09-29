@@ -7,8 +7,6 @@
 - Hidden sector
 - Consciousness 
 
-I'm coming into this project informed by my previous work with particle collision data. 
-
 As a group we engaged with a variety of topics, including symmetry, consciousness, magic and the hidden sector. Early on, it became rather evident that we all had a different understanding of words and concepts and finding points of contact between art and physics was one of the more challenging and rewarding parts of the process. 
 Early on we discussed ideas of symmetry (and symmetry-breaking) in physics - a concept that is both interesting and relatable to visual thinkers. These conversations had a great impact on my work and the choices I made while producing it. 
 
@@ -41,6 +39,25 @@ Personally, I was very excited to see the first image of a black hole - and I wa
 ## Technical requirements and space needed
 
 See TECHNICAL_REQUIREMENTS.md
+
+
+
+# Video installation possibilities, notes. 
+Possible video formats: 
+- Single channel
+    - Alternate source-video and FFT-video playback
+    - OR blend the videos 
+        - blending arc: source_only (1 cycle) -> fade to fft (1 cycle) -> fft_only (1 cycle) -> swap video+fft-source and repeat cycle
+    - OR composite videos (source: left, fft: right)
+
+- Dual channel:
+    - Videos play synchronously on 2 projectors, side-by-side on the same wall
+    - Audio is played on 2 channels, speakers mounted on left and right
+
+
+
+
+
 
 
 
