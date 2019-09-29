@@ -52,7 +52,14 @@ Comparing this set of images it is clear that the structural components of the p
 Now, as a final step before starting to process videos, I wanted to transform images of ocean waves to see what it would look like. My expectation was to see patterns emerge around the vertical axis, as ocean waves are mostly composed of horizontal edges. 
 
 
+![](input/horizon_low_res.jpg)
+The Pacific Ocean, somehhere in BC, coordinates unknown.
+<br> </br>
+![](output/horizon_full_res_fft_levels_low_res.png)
+The Pacific Ocean, Fourier transform.
+<br> </br>
 
+In this set of images we see a much more gradual and even distribution of edge-angles, but if we look closely we can see several small streaks with a steep angle. These streaks are likely a result of the horizontal edges in the ocean waves. As I saw these patterns emerge I was hopeful that the end-result would animate these subtle patterns, perhaps conveying the feeling of these waves to the viewer through the transformed image. 
 
 
 ## Technical requirements and space needed
