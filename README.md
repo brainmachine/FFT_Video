@@ -62,10 +62,13 @@ If we zoom in and adjust the levels in the image we can see the patterns a littl
 
 ![](output/horizon_full_res_fft_levels_crop_low_res.png)
 
+At this point, I was confident that the technique would work well with videos. As the waves moved in the video, the patterns would change in the animation. This would reveal the change in the frequency domain over time.
 
-## Technical requirements and space needed
+![](output/nesid_ocean_short_fft.gif)
 
-See TECHNICAL_REQUIREMENTS.md
+As you can see, the result shows patterns around the vertical axis (representing horizontal edge transitions). The pattern itself is mostly static but flows toward the center of the plot. To me, this captures the feeling I got when I meditated by the Pacif Ocean. The ocean is simultaneously sitting still *and* in motion.
+
+As the end product of this process I will process a series of ocean-videos I've been filming during the summer and edit them into a 10-15 minute long video. 
 
 
 
