@@ -32,7 +32,7 @@ EHT Collaboration")
 *M87**, *Messier 87*. Credit:
 EHT Collaboration
 <br> </br>
-![M87*, Messier 87](output/A-Consensus_full_res_fft_lvls_cntrst_curve.png "2D Fourier Transform of the M87*, Messier 87 image.")
+![M87*, Messier 87](output/A-Consensus_full_res_fft_lvls_cntrst_curve_low_res.png "2D Fourier Transform of the M87*, Messier 87 image.")
 2D Fourier Transform of the M87*, Messier 87 image.
 
 
