@@ -15,7 +15,6 @@
 ### Ideal exhibition context
 - The video monitor is mounted on a wall in a dimly lit area. 
 - It should be positioned with the monitor's center matching the eye-level of an average height exhibition guest. 
-- Headphones are mounted on a headphone stand next to the monitor. 
   
 The video installation is intended to be viewed by one person at a time. The viewer should be encouraged to stand relatively close to the monitor to immerse themselves in the video. 
 
@@ -32,5 +31,3 @@ The video installation is intended to be viewed by one person at a time. The vie
         - Resolution: 1920x1080 pixels
         - Refresh rate: 60Hz
         - Output: HDMI
-
-    - Headphones + headphone stand (mounted on the wall)
