@@ -10,19 +10,26 @@ mp.set_start_method('spawn', True)
 # Define input_filename, input dir and file extension.
 # inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
 inputDir = '/Users/alpha/Documents/FFT_Image/input/iceland_waves'
-inputFilename = 'VID_20190816_213702'
+# inputFilename = 'VID_20190816_213702'
+inputFilename = 'VID_20190825_153910'
 extension = 'mp4'
 
 numCores = 4
  
 
 if __name__ == '__main__': 
+    
     # Splice the path components together
     inputPath = os.path.join(inputDir, (inputFilename+'.'+extension))
 
     # FrameConverter - Loads a video and converts the to 2D FFT PNGs
     fc = FrameConverter(input_path=inputPath, do_pickle=True)
+    
+    # fc.load_video(input_path=inputPath)
+    
+    # fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
 
+    fc.composite_video()
 
     print("\n \n ------------------------------------- \n \n")
     print("video.shape (ndarray) --> " + str(fc.video.shape))
@@ -63,10 +70,7 @@ if __name__ == '__main__':
     pool.join()
     """
 
-    # Single process image export:
-    # fc.convert_video_to_images(fc.video)
-
-    fc.composite_video()
+    
     # Using NumPy
     # This saves out a good looking PNG at the end
 

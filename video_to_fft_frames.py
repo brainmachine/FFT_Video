@@ -15,25 +15,22 @@ class FrameConverter:
     """ Convert video to 2D DFT frames """
 
     def __init__(self, input_path, do_pickle=False):
-        self.input_path = input_path
+        
 
         self.do_pickle = do_pickle
-        self.pickle_path = None
-        self._set_pickle_path()
-
+        
+        self.input_path = input_path
         self.fileinfo = ffmpeg.probe(input_path)
         self.fps = self._get_fps
         self.width, self.height = self._get_size()
         self.num_chans = 1 # RGB, TODO: Handle monochrome and RGBA videos
-
-        
+        self.pickle_path = None
+        self._set_pickle_path()
         self.pix_fmt = self._get_pix_fmt()
+        self.video = None
 
+    def load_video(self, ):
         self.video = self._load_video()
-        self.export_path = None
-
-        self._create_export_path()
-
 
     def _set_pickle_path(self):
         _, self.pickle_path = os.path.split(self.input_path)
@@ -129,7 +126,7 @@ class FrameConverter:
 
             # Normalize magnitude_spectrum
             magnitude_spectrum = magnitude_spectrum/magnitude_spectrum.max()*255.0
-            print("max spectrum" + str(magnitude_spectrum.max()))
+            # print("max spectrum" + str(magnitude_spectrum.max()))
 
             # Save the image
             _, filename = os.path.split(self.input_path)
