@@ -7,6 +7,7 @@ import multiprocessing as mp
 import cv2
 import numpy as np
 import ffmpeg
+import pickle
 
 mp.set_start_method('spawn', True)
 
@@ -15,16 +16,28 @@ class FrameConverter:
 
     def __init__(self, input_path):
         self.input_path = input_path
+
+        self.do_pickle = True
+        self.pickle_path = None
+        self._set_pickle_path()
+
+        self.fileinfo = ffmpeg.probe(input_path)
+        
         self.width, self.height = self._get_size()
         self.num_chans = 3 # RGB, TODO: Handle monochrome and RGBA videos
 
-        self.fileinfo = ffmpeg.probe(input_path)
+        
         self.pix_fmt = self._get_pix_fmt()
 
         self.video = self._load_video()
         self.export_path = None
 
-        self._create_export_path(input_path)
+        self._create_export_path()
+
+    def _set_pickle_path(self):
+        _, self.pickle_path = os.path.split(self.input_path)
+        self.pickle_path, _ = os.path.splitext(self.pickle_path)
+        self.pickle_path = 'pickled_np_arrays/' + self.pickle_path + '.pickle'
 
     def _get_size(self):
         """ Find the width and height of the video. """
@@ -46,37 +59,59 @@ class FrameConverter:
         fps = a/b
         return fps
 
-    def _create_export_path(self, input_path):
+    def _create_export_path(self):
         """ Create an export folder if it doesn't exist already. """
-        _, file_name = os.path.split(input_path)
+        _, file_name = os.path.split(self.input_path)
 
         # drop the extension
         file_name, _ = os.path.splitext(file_name)
         self.export_path = 'output/%s'%file_name
         if not os.path.exists(self.export_path):
             os.mkdir(self.export_path)
-            print("Created path --> %s"%input_path)
+            print("Created path --> %s"%self.input_path)
 
     def _load_video(self):
         # Load the video
         # TODO: "deprecated pixel format used, make sure you did set range correctly"
         # https://stackoverflow.com/questions/23067722/swscaler-warning-deprecated-pixel-format-used
+        print('Loading video file...')
+        if self.do_pickle:
+            print('Attempting to load pickled video')
 
+            # video = pickle.load(open( picklePath))
+            try:
+                pickle_in = open(self.pickle_path, "rb")
+                video = pickle.load(pickle_in)
+                print('Loaded pickled video numpy array.')
+                return video
+            except FileNotFoundError:
+                print('Pickle file not found')
+                pass
+
+            
+        
         out, _ = (
             ffmpeg
             .input(self.input_path)
             .output('pipe:', format='rawvideo', pix_fmt='rgb24')
-            .run(capture_stdout=True, capture_stderr=True)
+            # .run(capture_stdout=True, capture_stderr=True)
+            .run(capture_stdout=True)
 
         )
         # Convert to Numpy Array
-        video = (
+        np_video = (
             np
             .frombuffer(out, np.uint8)
-            .reshape([-1, self.height, self.width, 1])
+            .reshape([-1, self.height, self.width, self.num_chans])
         )
+        
+        if self.do_pickle:
+            pickle_out = open(self.pickle_path, "wb")
+            pickle.dump(np_video, pickle_out)
+            pickle_out.close()
 
-        return video
+
+        return np_video
 
     def convert_video_to_images(self, video, offset):
         """ Iterate through all the video frames and export as PNGs.

@@ -15,36 +15,38 @@ mp.set_start_method('spawn', True)
 # TODO: It will be a floating field of fft bins (possibly VR/UE4?)
 
 # Define input_filename, input dir and file extension.
-# inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
-inputDir = '/Users/alpha/Documents/FFT_Image'
-inputFilename = 'VID_20190825_153910'
+inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
+# inputDir = '/Users/alpha/Documents/FFT_Image'
+inputFilename = 'short_test_video'
 extension = 'mp4'
 
-numCores = 2
+numCores = 4
  
 
 if __name__ == '__main__': 
-    # Splice the path components together5
+    # Splice the path components together
     inputPath = os.path.join(inputDir, (inputFilename+'.'+extension))
 
-    # FrameConverter
+    # FrameConverter - Loads a video and converts the to 2D FFT PNGs
     fc = FrameConverter(inputPath)
 
-        
+
     print("\n \n ------------------------------------- \n \n")
-    print("video.shape (ndarray) --> " + str(video.shape))
+    print("video.shape (ndarray) --> " + str(fc.video.shape))
 
     # Trim the video so it is divisible by 4 (for my 4 CPU cores)
-        
+     
     trim = len(fc.video)%numCores # number of frames to trim off the end
     print(len(fc.video))
     print(trim)
 
     # Multiprocessing frame conversion and saving PNGs
-    segments = np.split(fc.video[:-trim], 4, axis=0)
+    # 
+    # framesPerSegment = len(fc.video)/numCores
+    segments = np.split(fc.video[:-trim], numCores, axis=0)
     jobs = []
     for index, segment in enumerate(segments):
-        frameNumber = len(fc.video)+len(fc.video)*index # TODO: Review
+        frameNumber = (len(fc.video)/len(segments))*index # TODO: Review
         p = mp.Process(target=fc.convert_video_to_images, args=(segment, index))
         jobs.append(p)
         p.start()
