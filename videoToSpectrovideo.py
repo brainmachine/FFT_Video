@@ -43,17 +43,28 @@ if __name__ == '__main__':
     # Multiprocessing frame conversion and saving PNGs
     # 
     # framesPerSegment = len(fc.video)/numCores
+    
     segments = np.split(fc.video[:-trim], numCores, axis=0)
+    """
     jobs = []
     for index, segment in enumerate(segments):
         frameNumber = (len(fc.video)/len(segments))*index # TODO: Review
         p = mp.Process(target=fc.convert_video_to_images, args=(segment, index))
         jobs.append(p)
         p.start()
-
+    
     # Block the program from continuing until we're done converting all frames
     for job in jobs:
         job.join()
+    """
+    segmentDict = dict()
+    for index, segment in enumerate(segments):
+        segmentDict[index] = segment
+    
+    pool = mp.Pool(processes=numCores)
+    pool.map(fc.convert_video_to_images, segmentDict)
+    pool.close()
+    pool.join()
 
     # Using NumPy
     # This saves out a good looking PNG at the end
