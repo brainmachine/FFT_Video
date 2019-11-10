@@ -6,7 +6,7 @@ import os
 import multiprocessing as mp
 mp.set_start_method('spawn', True)
 
-# TODO: BUG: Output videos are significantly git shorter than the input!
+# TODO: BUG: Output videos are significantly shorter than the input!
 # TODO: Run FFT on RGB channels separately and splice them back together. Should make nice colors that emphasize differnce.
 # TODO: Idea: Stack the output PNGs like pieces of transparent paper
 # TODO: Use a rolling window and look at a segment of the stack evolve. 
