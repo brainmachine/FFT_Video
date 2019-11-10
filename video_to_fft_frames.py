@@ -70,6 +70,7 @@ class FrameConverter:
             os.mkdir(self.export_path)
             print("Created path --> %s"%self.input_path)
 
+
     def _load_video(self):
         # Load the video
         # TODO: "deprecated pixel format used, make sure you did set range correctly"
