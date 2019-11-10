@@ -1,11 +1,11 @@
 {
-    "python.pythonPath": "c:\\Users\\Leo\\Documents\\FFT_Video\\.venv\\Scripts\\python.exe",
+    "python.pythonPath": "fft_video_env/bin/python",
     //"git.ignoreLimitWarning": true,
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": false,
+    "python.linting.pylintEnabled": true,
     "python.linting.pylintArgs": [
         "--rcfile",
         ".pylintrc"
     ],
-    "python.linting.banditEnabled": true
+    "python.linting.banditEnabled": false
 }
