@@ -14,17 +14,17 @@ mp.set_start_method('spawn', True)
 class FrameConverter:
     """ Convert video to 2D DFT frames """
 
-    def __init__(self, input_path):
+    def __init__(self, input_path, do_pickle=False):
         self.input_path = input_path
 
-        self.do_pickle = True
+        self.do_pickle = do_pickle
         self.pickle_path = None
         self._set_pickle_path()
 
         self.fileinfo = ffmpeg.probe(input_path)
-        
+        self.fps = self._get_fps
         self.width, self.height = self._get_size()
-        self.num_chans = 3 # RGB, TODO: Handle monochrome and RGBA videos
+        self.num_chans = 1 # RGB, TODO: Handle monochrome and RGBA videos
 
         
         self.pix_fmt = self._get_pix_fmt()
@@ -33,6 +33,7 @@ class FrameConverter:
         self.export_path = None
 
         self._create_export_path()
+
 
     def _set_pickle_path(self):
         _, self.pickle_path = os.path.split(self.input_path)
@@ -94,7 +95,7 @@ class FrameConverter:
         out, _ = (
             ffmpeg
             .input(self.input_path)
-            .output('pipe:', format='rawvideo', pix_fmt='rgb24')
+            .output('pipe:', format='rawvideo', pix_fmt='gray')
             # .run(capture_stdout=True, capture_stderr=True)
             .run(capture_stdout=True)
 
@@ -136,3 +137,21 @@ class FrameConverter:
             outfile_path = 'output/%s/%s_fft_%s.png'% (filename, filename, str(index+offset).zfill(3))
             print(outfile_path)
             cv2.imwrite(outfile_path, magnitude_spectrum)
+    
+    def composite_video(self):
+        """ Loads all PNGs from a path and produces a video. """
+
+        _, input_filename = os.path.split(self.input_path)
+        input_filename, extension = os.path.splitext(input_filename)
+        # Read the PNGs from here
+        images_path = 'output/%s/*.png'%input_filename
+        # Save the composite video here
+        video_save_path = '%s_fft.%s'%(input_filename, extension)
+        print("exporting " + video_save_path)
+        (
+            ffmpeg
+            .input(images_path, pattern_type='glob', framerate=self.fps)
+            .output(video_save_path, format='mp4')
+            .run()
+        )
+        print("saved " + video_save_path)

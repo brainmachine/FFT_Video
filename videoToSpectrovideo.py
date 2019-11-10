@@ -7,13 +7,6 @@ from combine_frames import FrameSplicer
 
 mp.set_start_method('spawn', True)
 
-# TODO: BUG: Output videos are significantly shorter than the input!
-# TODO: Run FFT on RGB channels separately and splice them back together. Should make nice colors that emphasize differnce.
-# TODO: Idea: Stack the output PNGs like pieces of transparent paper
-# TODO: Use a rolling window and look at a segment of the stack evolve. 
-# TODO: This is in 3D so you can rotate around, zoom in, immerse yourself or whatever. 
-# TODO: It will be a floating field of fft bins (possibly VR/UE4?)
-
 # Define input_filename, input dir and file extension.
 # inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
 inputDir = '/Users/alpha/Documents/FFT_Image/input/iceland_waves'
@@ -28,7 +21,7 @@ if __name__ == '__main__':
     inputPath = os.path.join(inputDir, (inputFilename+'.'+extension))
 
     # FrameConverter - Loads a video and converts the to 2D FFT PNGs
-    fc = FrameConverter(inputPath)
+    fc = FrameConverter(input_path=inputPath, do_pickle=False)
 
 
     print("\n \n ------------------------------------- \n \n")
@@ -44,8 +37,9 @@ if __name__ == '__main__':
     # 
     # framesPerSegment = len(fc.video)/numCores
     
-    segments = np.split(fc.video[:-trim], numCores, axis=0)
     """
+    segments = np.split(fc.video[:-trim], numCores, axis=0)
+    
     jobs = []
     for index, segment in enumerate(segments):
         frameNumber = (len(fc.video)/len(segments))*index # TODO: Review
