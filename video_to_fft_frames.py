@@ -53,7 +53,7 @@ class FrameConverter:
         # drop the extension
         file_name, _ = os.path.splitext(file_name)
         self.export_path = 'output/%s'%file_name
-        if not os.path.exists(input_path):
+        if not os.path.exists(self.export_path):
             os.mkdir(self.export_path)
             print("Created path --> %s"%input_path)
 
