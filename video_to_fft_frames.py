@@ -129,7 +129,7 @@ class FrameConverter:
 
             # Normalize magnitude_spectrum
             magnitude_spectrum = magnitude_spectrum/magnitude_spectrum.max()*255.0
-            magnitude_spectrum.max()
+            print("max spectrum" + str(magnitude_spectrum.max()))
 
             # Save the image
             _, filename = os.path.split(self.input_path)
@@ -146,11 +146,11 @@ class FrameConverter:
         # Read the PNGs from here
         images_path = 'output/%s/*.png'%input_filename
         # Save the composite video here
-        video_save_path = '%s_fft.%s'%(input_filename, extension)
+        video_save_path = '%s_fft%s'%(input_filename, extension)
         print("exporting " + video_save_path)
         (
             ffmpeg
-            .input(images_path, pattern_type='glob', framerate=self.fps)
+            .input(images_path, pattern_type='glob', framerate=60)
             .output(video_save_path, format='mp4')
             .run()
         )

@@ -21,7 +21,7 @@ if __name__ == '__main__':
     inputPath = os.path.join(inputDir, (inputFilename+'.'+extension))
 
     # FrameConverter - Loads a video and converts the to 2D FFT PNGs
-    fc = FrameConverter(input_path=inputPath, do_pickle=False)
+    fc = FrameConverter(input_path=inputPath, do_pickle=True)
 
 
     print("\n \n ------------------------------------- \n \n")
@@ -64,7 +64,9 @@ if __name__ == '__main__':
     """
 
     # Single process image export:
-    fc.convert_video_to_images(fc.video)
+    # fc.convert_video_to_images(fc.video)
+
+    fc.composite_video()
     # Using NumPy
     # This saves out a good looking PNG at the end
 
