@@ -113,25 +113,25 @@ class FrameConverter:
 
         return np_video
 
-    def convert_video_to_images(self, segmentDict):
+    def convert_video_to_images(self, video, offset=0):
         """ Iterate through all the video frames and export as PNGs.
             We pass in a video segment + the frame offset so we can support multiprocessing.
         """
-        print(segmentDict)
-        # for item in segmentDict:
-        #     print("converting frame to fft")
-        #     frame = np.fft.fft2(frame)
-        #     fshift = np.fft.fftshift(frame)
-        #     # TODO: Deal with divide-by-zero
-        #     magnitude_spectrum = 20*np.log(np.abs(fshift))
 
-        #     # Normalize magnitude_spectrum
-        #     magnitude_spectrum = magnitude_spectrum/magnitude_spectrum.max()*255.0
-        #     magnitude_spectrum.max()
+        for index, frame in enumerate(video):
+            print("converting frame to fft")
+            frame = np.fft.fft2(frame)
+            fshift = np.fft.fftshift(frame)
+            # TODO: Deal with divide-by-zero
+            magnitude_spectrum = 20*np.log(np.abs(fshift))
 
-        #     # Save the image
-        #     _, filename = os.path.split(self.input_path)
-        #     filename, _ = os.path.splitext(filename)
-        #     outfile_path = 'output/%s/%s_fft_%s.png'% (filename, filename, str(offset).zfill(3))
-        #     print(outfile_path)
-        #     cv2.imwrite(outfile_path, magnitude_spectrum)
+            # Normalize magnitude_spectrum
+            magnitude_spectrum = magnitude_spectrum/magnitude_spectrum.max()*255.0
+            magnitude_spectrum.max()
+
+            # Save the image
+            _, filename = os.path.split(self.input_path)
+            filename, _ = os.path.splitext(filename)
+            outfile_path = 'output/%s/%s_fft_%s.png'% (filename, filename, str(index+offset).zfill(3))
+            print(outfile_path)
+            cv2.imwrite(outfile_path, magnitude_spectrum)

@@ -15,9 +15,9 @@ mp.set_start_method('spawn', True)
 # TODO: It will be a floating field of fft bins (possibly VR/UE4?)
 
 # Define input_filename, input dir and file extension.
-inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
-# inputDir = '/Users/alpha/Documents/FFT_Image'
-inputFilename = 'short_test_video'
+# inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
+inputDir = '/Users/alpha/Documents/FFT_Image/input/iceland_waves'
+inputFilename = 'VID_20190816_213702'
 extension = 'mp4'
 
 numCores = 4
@@ -57,6 +57,8 @@ if __name__ == '__main__':
     for job in jobs:
         job.join()
     """
+
+    """
     segmentDict = dict()
     for index, segment in enumerate(segments):
         segmentDict[index] = segment
@@ -65,7 +67,10 @@ if __name__ == '__main__':
     pool.map(fc.convert_video_to_images, segmentDict)
     pool.close()
     pool.join()
+    """
 
+    # Single process image export:
+    fc.convert_video_to_images(fc.video)
     # Using NumPy
     # This saves out a good looking PNG at the end
 

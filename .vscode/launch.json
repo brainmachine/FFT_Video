@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         
         {
             "name": "Python: Current File",
@@ -17,6 +18,13 @@
             "type": "python",
             "request": "launch",
             "program": "C:\\Users\\Leo\\Documents\\FFT_Video\\videoToSpectrovideo.py",
+            "console": "integratedTerminal"
+        }, 
+        {
+            "name": "Python: Mac: videoToSpectrovideo.py",
+            "type": "python",
+            "request": "launch",
+            "program": "/Users/alpha/Documents/FFT_Image/videoToSpectrovideo.py",
             "console": "integratedTerminal"
         }
     ]

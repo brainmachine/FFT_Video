@@ -5,25 +5,7 @@ class FrameSplicer:
     def __init__():
         pass
 
-    def process_frames(self, video):
-        """ Process video """
-        # Trim the video so it is divisible by 4 (for my 4 CPU cores)
-        
-        trim = len(video)%NUM_CORES # number of frames to trim off the end
-        print(len(video))
-        print(trim)
-        # Multiprocessing frame conversion and saving PNGs
-        segments = np.split(video[:-trim], 4, axis=0)
-        jobs = []
-        for index, segment in enumerate(segments):
-            frameNumber = len(video)+len(video)*index # TODO: Review
-            p = mp.Process(target=convertVideoToImages, args=(segment, index))
-            jobs.append(p)
-            p.start()
-
-        # Block the program from continuing until we're done converting all frames
-        for job in jobs:
-            job.join()
+    
 
     def composite_video(self):
         """ Loads all PNGs from a path and produces a video. """
