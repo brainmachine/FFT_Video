@@ -29,11 +29,11 @@ if __name__ == '__main__':
     inputPath = os.path.join(inputDir, (inputFilename+'.'+extension))
 
     # FrameConverter - Loads a video and converts the to 2D FFT PNGs
-    fc = FrameConverter(input_path=inputPath, do_pickle=True)
+    fc = FrameConverter(input_path=inputPath, do_pickle=False)
 
-    # fc.load_video()
+    fc.load_video()
 
-    # fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
+    fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
 
     fc.composite_video()
 

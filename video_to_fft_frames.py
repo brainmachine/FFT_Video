@@ -116,6 +116,7 @@ class FrameConverter:
         """ Iterate through all the video frames and export as PNGs.
             We pass in a video segment + the frame offset so we can support multiprocessing.
         """
+        cwd = os.getcwd()
 
         for index, frame in enumerate(video):
             print("converting frame to fft")
@@ -131,7 +132,12 @@ class FrameConverter:
             # Save the image
             _, filename = os.path.split(self.input_path)
             filename, _ = os.path.splitext(filename)
-            outfile_path = 'output/%s/%s_fft_%s.png'% (filename, filename, str(index+offset).zfill(3))
+            # mac path
+            # outfile_path = 'output/%s/%s_fft_%s.png'% (filename, filename, str(index+offset).zfill(3))
+            
+            # win path
+            outfile_path = '%s\\output\\%s\\%s_fft_%s.png'% (cwd, filename, filename, str(index+offset).zfill(3))
+
             print(outfile_path)
             cv2.imwrite(outfile_path, magnitude_spectrum)
     
