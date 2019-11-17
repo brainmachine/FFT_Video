@@ -41,19 +41,19 @@ class FrameConverter:
     def _get_size(self):
         """ Find the width and height of the video. """
         # TODO: Automatically pick the right stream
-        width = self.fileinfo['streams'][1]['width']
-        height = self.fileinfo['streams'][1]['height']
+        width = self.fileinfo['streams'][0]['width']
+        height = self.fileinfo['streams'][0]['height']
 
         return [width, height]
 
     def _get_pix_fmt(self):
-        return self.fileinfo['streams'][1]['pix_fmt']
+        return self.fileinfo['streams'][0]['pix_fmt']
 
     def _get_fps(self):
         """ Find the FPS of the video, some magic involved...
         Maybe there's a better way to do this. """
         # Split the string and calculate the fps
-        a, b = self.fileinfo['streams'][1]['avg_frame_rate'].split('/')
+        a, b = self.fileinfo['streams'][0]['avg_frame_rate'].split('/')
         a, b = float(a), float(b)
         fps = a/b
         return fps
@@ -93,7 +93,8 @@ class FrameConverter:
         out, _ = (
             ffmpeg
             .input(self.input_path)
-            .output('pipe:', format='rawvideo', pix_fmt='gray')
+            
+            .output('pipe:', format='rawvideo', pix_fmt='gray', **{'b:v': '2M', 'r': 60}) # -b:v -> constant bitrate
             # .run(capture_stdout=True, capture_stderr=True)
             .run(capture_stdout=True)
 
@@ -120,7 +121,7 @@ class FrameConverter:
         cwd = os.getcwd()
 
         for index, frame in enumerate(video):
-            print("converting frame to fft")
+            print("converting NumPy frame to fft and exporting to PNG")
             frame = np.fft.fft2(frame)
             fshift = np.fft.fftshift(frame)
             # TODO: Deal with divide-by-zero

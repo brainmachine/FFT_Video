@@ -10,7 +10,8 @@ mp.set_start_method('spawn', True)
 # Define input_filename, input dir and file extension.
 
 # Windows content
-inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\iceland_waves\\"
+inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\fixed_framerate\\"
+# inputFilename = "VID_20190724_172154"
 inputFilename = "VID_20190724_172154"
 
 # Mac content
@@ -18,7 +19,8 @@ inputFilename = "VID_20190724_172154"
 # inputFilename = 'VID_20190825_153910'
 
 
-extension = 'mp4'
+# extension = 'mp4'
+extension = 'm4v'
 
 numCores = 4
 
