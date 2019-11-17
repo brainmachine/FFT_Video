@@ -1,21 +1,27 @@
 import os
 import multiprocessing as mp
-import numpy as np
-import ffmpeg
+# import numpy as np
+# import ffmpeg
 from video_to_fft_frames import FrameConverter
-from combine_frames import FrameSplicer
+# from combine_frames import FrameSplicer
 
 mp.set_start_method('spawn', True)
 
 # Define input_filename, input dir and file extension.
-# inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
-inputDir = '/Users/alpha/Documents/FFT_Image/input/iceland_waves'
-# inputFilename = 'VID_20190816_213702'
-inputFilename = 'VID_20190825_153910'
+
+# Windows content
+inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
+inputFilename = "short_test_video"
+
+# Mac content
+# inputDir = '/Users/alpha/Documents/FFT_Image/input/iceland_waves'
+# inputFilename = 'VID_20190825_153910'
+
+
 extension = 'mp4'
 
 numCores = 4
- 
+
 
 if __name__ == '__main__': 
     
@@ -24,9 +30,9 @@ if __name__ == '__main__':
 
     # FrameConverter - Loads a video and converts the to 2D FFT PNGs
     fc = FrameConverter(input_path=inputPath, do_pickle=True)
-    
-    # fc.load_video(input_path=inputPath)
-    
+
+    # fc.load_video()
+
     # fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
 
     fc.composite_video()
@@ -35,7 +41,7 @@ if __name__ == '__main__':
     print("video.shape (ndarray) --> " + str(fc.video.shape))
 
     # Trim the video so it is divisible by 4 (for my 4 CPU cores)
-     
+
     trim = len(fc.video)%numCores # number of frames to trim off the end
     print(len(fc.video))
     print(trim)
@@ -43,17 +49,17 @@ if __name__ == '__main__':
     # Multiprocessing frame conversion and saving PNGs
     # 
     # framesPerSegment = len(fc.video)/numCores
-    
+
     """
     segments = np.split(fc.video[:-trim], numCores, axis=0)
-    
+
     jobs = []
     for index, segment in enumerate(segments):
         frameNumber = (len(fc.video)/len(segments))*index # TODO: Review
         p = mp.Process(target=fc.convert_video_to_images, args=(segment, index))
         jobs.append(p)
         p.start()
-    
+
     # Block the program from continuing until we're done converting all frames
     for job in jobs:
         job.join()
@@ -63,14 +69,15 @@ if __name__ == '__main__':
     segmentDict = dict()
     for index, segment in enumerate(segments):
         segmentDict[index] = segment
-    
+
     pool = mp.Pool(processes=numCores)
     pool.map(fc.convert_video_to_images, segmentDict)
     pool.close()
     pool.join()
     """
 
-    
+
+
     # Using NumPy
     # This saves out a good looking PNG at the end
 
