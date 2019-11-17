@@ -152,12 +152,13 @@ class FrameConverter:
         images_path = '%s\\output\\%s\\%s_fft_%s.png'%(os.getcwd(), input_filename, input_filename, "%03d")
         # Save the composite video here
         video_save_path, _ = os.path.split(images_path)
-        video_save_path += "\\%s%s"%(input_filename, extension)
+        video_save_path, name = os.path.split(video_save_path)
+        video_save_path = video_save_path+'\\render\\'+name+extension
         print("exporting " + video_save_path)
         (
             ffmpeg
             .input(images_path, pattern_type='sequence', framerate=60)
-            .output(video_save_path, format='mp4')
+            .output(video_save_path, format='mp4') # removing period from extension
             .run()
         )
         print("saved " + video_save_path)

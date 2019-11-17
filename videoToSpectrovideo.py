@@ -26,7 +26,23 @@ numCores = 4
 
 
 if __name__ == '__main__': 
-    
+
+    # Batch processing all files in inputDir
+
+    for root, dirs, files in os.walk(inputDir, topdown=False):
+        for name in files:
+            # Splice the path components together
+            inputPath = os.path.join(inputDir, name)
+            fc = FrameConverter(input_path=inputPath, do_pickle=False)
+            fc.load_video()
+            fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
+            fc.composite_video()
+
+
+
+
+    # Single video processing version (not batch)
+    '''
     # Splice the path components together
     inputPath = os.path.join(inputDir, (inputFilename+'.'+extension))
 
@@ -38,7 +54,7 @@ if __name__ == '__main__':
     fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
 
     fc.composite_video()
-
+    '''
     # print("\n \n ------------------------------------- \n \n")
     # print("video.shape (ndarray) --> " + str(fc.video.shape))
 
