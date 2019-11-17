@@ -31,20 +31,20 @@ if __name__ == '__main__':
     # FrameConverter - Loads a video and converts the to 2D FFT PNGs
     fc = FrameConverter(input_path=inputPath, do_pickle=False)
 
-    fc.load_video()
+    # fc.load_video()
 
-    fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
+    # fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
 
     fc.composite_video()
 
-    print("\n \n ------------------------------------- \n \n")
-    print("video.shape (ndarray) --> " + str(fc.video.shape))
+    # print("\n \n ------------------------------------- \n \n")
+    # print("video.shape (ndarray) --> " + str(fc.video.shape))
 
     # Trim the video so it is divisible by 4 (for my 4 CPU cores)
 
-    trim = len(fc.video)%numCores # number of frames to trim off the end
-    print(len(fc.video))
-    print(trim)
+    # trim = len(fc.video)%numCores # number of frames to trim off the end
+    # print(len(fc.video))
+    # print(trim)
 
     # Multiprocessing frame conversion and saving PNGs
     # 

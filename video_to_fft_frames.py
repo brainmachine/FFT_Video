@@ -147,13 +147,14 @@ class FrameConverter:
         _, input_filename = os.path.split(self.input_path)
         input_filename, extension = os.path.splitext(input_filename)
         # Read the PNGs from here
-        images_path = 'output/%s/*.png'%input_filename
+        images_path = '%s\\output\\%s\\%s_fft_%s.png'%(os.getcwd(), input_filename, input_filename, "%03d")
         # Save the composite video here
-        video_save_path = '%s_fft%s'%(input_filename, extension)
+        video_save_path, _ = os.path.split(images_path)
+        video_save_path += "\\%s%s"%(input_filename, extension)
         print("exporting " + video_save_path)
         (
             ffmpeg
-            .input(images_path, pattern_type='glob', framerate=60)
+            .input(images_path, pattern_type='sequence', framerate=60)
             .output(video_save_path, format='mp4')
             .run()
         )
