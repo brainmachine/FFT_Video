@@ -28,6 +28,7 @@ class FrameConverter:
         self._set_pickle_path()
         self.pix_fmt = self._get_pix_fmt()
         self.video = None
+        self._create_export_path()
 
     def load_video(self, ):
         self.video = self._load_video()
@@ -63,7 +64,7 @@ class FrameConverter:
 
         # drop the extension
         file_name, _ = os.path.splitext(file_name)
-        self.export_path = 'output/%s'%file_name
+        self.export_path = '%s\\output\\%s'%(os.getcwd(), file_name)
         if not os.path.exists(self.export_path):
             os.mkdir(self.export_path)
             print("Created path --> %s"%self.input_path)

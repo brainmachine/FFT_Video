@@ -10,8 +10,8 @@ mp.set_start_method('spawn', True)
 # Define input_filename, input dir and file extension.
 
 # Windows content
-inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\"
-inputFilename = "short_test_video"
+inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\iceland_waves\\"
+inputFilename = "VID_20190724_172154"
 
 # Mac content
 # inputDir = '/Users/alpha/Documents/FFT_Image/input/iceland_waves'
@@ -31,9 +31,9 @@ if __name__ == '__main__':
     # FrameConverter - Loads a video and converts the to 2D FFT PNGs
     fc = FrameConverter(input_path=inputPath, do_pickle=False)
 
-    # fc.load_video()
+    fc.load_video()
 
-    # fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
+    fc.convert_video_to_images(fc.video) # Convert to FFT and Export frames as pngs
 
     fc.composite_video()
 
