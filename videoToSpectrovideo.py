@@ -12,7 +12,7 @@ mp.set_start_method('spawn', True)
 # Windows content
 inputDir = "C:\\Users\\Leo\\Documents\\FFT_Video\\input\\fixed_framerate\\"
 # inputFilename = "VID_20190724_172154"
-inputFilename = "VID_20190724_172154"
+inputFilename = "VID_20190724_172154" # Irrelevant for batch processing
 
 # Mac content
 # inputDir = '/Users/alpha/Documents/FFT_Image/input/iceland_waves'
@@ -25,7 +25,7 @@ extension = 'm4v'
 numCores = 4
 
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
 
     # Batch processing all files in inputDir
 
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     # print(trim)
 
     # Multiprocessing frame conversion and saving PNGs
-    # 
+
     # framesPerSegment = len(fc.video)/numCores
 
     """
@@ -106,14 +106,16 @@ if __name__ == '__main__':
     # magnitude_spectrum = 20*np.log(np.abs(fshift))
 
 
-    # TODO: Try mapping the fshift from min() to max() making it 0-255, not the abs pipmethod (not backwards compatible)
-    #magnitude_spectrum = np.asarray(magnitude_spectrum, dtype=np.float32)
+    # TODO: Try mapping the fshift from min() to max() making it 0-255,
+    #       not the abs pipmethod (not backwards compatible)
+    # magnitude_spectrum = np.asarray(magnitude_spectrum, dtype=np.float32)
 
 
 
 # TODO: BUG: Output videos are significantly git shorter than the input!
-# TODO: Run FFT on RGB channels separately and splice them back together. Should make nice colors that emphasize differnce.
+# TODO: Run FFT on RGB channels separately and splice them back together.
+#       Should make nice colors that emphasize differnce.
 # TODO: Idea: Stack the output PNGs like pieces of transparent paper
-# TODO: Use a rolling window and look at a segment of the stack evolve. 
-# TODO: This is in 3D so you can rotate around, zoom in, immerse yourself or whatever. 
+# TODO: Use a rolling window and look at a segment of the stack evolve.
+# TODO: This is in 3D so you can rotate around, zoom in, immerse yourself or whatever.
 # TODO: It will be a floating field of fft bins (possibly VR/UE4?)

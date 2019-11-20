@@ -4,10 +4,11 @@ Run this first, then use combine_frames.py to create a video.
 """
 import os
 import multiprocessing as mp
+import pickle
 import cv2
 import numpy as np
 import ffmpeg
-import pickle
+
 
 mp.set_start_method('spawn', True)
 
@@ -15,10 +16,7 @@ class FrameConverter:
     """ Convert video to 2D DFT frames """
 
     def __init__(self, input_path, do_pickle=False):
-        
-
         self.do_pickle = do_pickle
-        
         self.input_path = input_path
         self.fileinfo = ffmpeg.probe(input_path)
         self.fps = self._get_fps
@@ -72,6 +70,8 @@ class FrameConverter:
 
     def _load_video(self):
         # Load the video
+        # TODO: I'm getting "More than 1000 frames duplicated" warning on load.
+        #       I should probably set the framerate to match the video (I thought I already was...)
         # TODO: "deprecated pixel format used, make sure you did set range correctly"
         # https://stackoverflow.com/questions/23067722/swscaler-warning-deprecated-pixel-format-used
         print('Loading video file...')
@@ -86,15 +86,16 @@ class FrameConverter:
                 return video
             except FileNotFoundError:
                 print('Pickle file not found')
-                pass
 
-            
-        
+
+
         out, _ = (
             ffmpeg
             .input(self.input_path)
-            
-            .output('pipe:', format='rawvideo', pix_fmt='gray', **{'b:v': '2M', 'r': 60}) # -b:v -> constant bitrate
+            .output('pipe:',
+                    format='rawvideo',
+                    pix_fmt='gray',
+                    **{'b:v': '2M', 'r': 60}) # -b:v -> constant bitrate
             # .run(capture_stdout=True, capture_stderr=True)
             .run(capture_stdout=True)
 
@@ -105,7 +106,7 @@ class FrameConverter:
             .frombuffer(out, np.uint8)
             .reshape([-1, self.height, self.width, self.num_chans])
         )
-        
+
         if self.do_pickle:
             pickle_out = open(self.pickle_path, "wb")
             pickle.dump(np_video, pickle_out)
@@ -136,20 +137,25 @@ class FrameConverter:
             filename, _ = os.path.splitext(filename)
             # mac path
             # outfile_path = 'output/%s/%s_fft_%s.png'% (filename, filename, str(index+offset).zfill(3))
-            
+
             # win path
-            outfile_path = '%s\\output\\%s\\%s_fft_%s.png'% (cwd, filename, filename, str(index+offset).zfill(3))
+            outfile_path = '%s\\output\\%s\\%s_fft_%s.png'% (cwd,
+                                                             filename,
+                                                             filename,
+                                                             str(index+offset).zfill(3))
 
             print(outfile_path)
             cv2.imwrite(outfile_path, magnitude_spectrum)
-    
+
     def composite_video(self):
         """ Loads all PNGs from a path and produces a video. """
-
         _, input_filename = os.path.split(self.input_path)
         input_filename, extension = os.path.splitext(input_filename)
         # Read the PNGs from here
-        images_path = '%s\\output\\%s\\%s_fft_%s.png'%(os.getcwd(), input_filename, input_filename, "%03d")
+        images_path = '%s\\output\\%s\\%s_fft_%s.png'%(os.getcwd(),
+                                                       input_filename,
+                                                       input_filename,
+                                                       "%03d")
         # Save the composite video here
         video_save_path, _ = os.path.split(images_path)
         video_save_path, name = os.path.split(video_save_path)
